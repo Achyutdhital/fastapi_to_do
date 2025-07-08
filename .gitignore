@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.pyc
+*.pyd
+*.pyo
+.Python
+env/
+venv/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Editor/IDE specific
+.vscode/
+.idea/
+*.swp
+*.bak
+*.swo
+
+# FastAPI/Uvicorn specific
+.mypy_cache/
+.pytest_cache/
+htmlcov/
+.coverage
+
+# Logs and environment variables
+*.log
+.env
+
+# Database files PostgreSQL 
+*.db
+*.sqlite3
