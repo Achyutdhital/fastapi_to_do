@@ -15,6 +15,7 @@ class TodoUpdate(BaseModel):
 
 class TodoResponse(TodoBase):
     id: int
+    user_id: int
     created_at: datetime
     updated_at: Optional[datetime] = None
 
