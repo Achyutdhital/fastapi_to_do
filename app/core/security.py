@@ -16,11 +16,28 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 security = HTTPBearer()
 
 def hash_password(password: str) -> str:
-   
+    """
+    Hash a plain text password using bcrypt.
+    
+    Args:
+        password: Plain text password from user
+        
+    Returns:
+        Hashed password string safe for database storage
+    """
     return pwd_context.hash(password)
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
+    """
+    Verify a plain text password against its hash.
     
+    Args:
+        plain_password: Password user entered
+        hashed_password: Stored hash from database
+        
+    Returns:
+        True if passwords match, False otherwise
+    """
     return pwd_context.verify(plain_password, hashed_password)
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> str:
@@ -52,7 +69,20 @@ async def get_current_user(
     credentials: HTTPAuthorizationCredentials = Depends(security),
     db: Session = Depends(get_db)
 ) -> User:
+    """ 
+    Get current authenticated user from JWT token.
+    This is a FastAPI dependency that can be used in route functions.
     
+    Args:
+        credentials: HTTP Bearer token from request header
+        db: Database session
+        
+    Returns:
+        User object of authenticated user
+        
+    Raises:
+        HTTPException: If token is invalid or user not found
+    """
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
