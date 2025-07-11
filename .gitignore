@@ -1,33 +1,71 @@
-# Python
+### Python ###
+# Byte-compiled files
 __pycache__/
-*.pyc
-*.pyd
-*.pyo
-.Python
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.env/
+.venv/
 env/
 venv/
-.venv/
 ENV/
 env.bak/
 venv.bak/
 
-# Editor/IDE specific
-.vscode/
-.idea/
+# Development files
 *.swp
 *.bak
 *.swo
+*~
 
-# FastAPI/Uvicorn specific
-.mypy_cache/
-.pytest_cache/
-htmlcov/
-.coverage
-
-# Logs and environment variables
-*.log
-.env
-
-# Database files PostgreSQL 
+### Database ###
+# SQLite (default for local development)
 *.db
+*.db-journal
+*.sqlite
 *.sqlite3
+
+# PostgreSQL (if used in production)
+/pgdata/
+
+### Environment ###
+# Sensitive credentials
+.env
+.env.local
+.env.*.local
+
+### IDE ###
+# VS Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# PyCharm/IntelliJ
+.idea/
+*.iml
+*.ipr
+*.iws
+
+### Testing ###
+# pytest
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+### Build/Deployment ###
+# Package management
+*.egg-info/
+*.egg
+dist/
+build/
+pip-wheel-metadata/
+
+# Documentation
+docs/_build/
