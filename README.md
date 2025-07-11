@@ -1,6 +1,6 @@
 # FastAPI Todo Application
 
-A secure, scalable Todo List API built with FastAPI, featuring JWT authentication and PostgreSQL/SQLite database support.
+A secure, scalable Todo List API built with FastAPI, featuring JWT authentication and PostgreSQL database support.
 
 ## Features
 
@@ -16,9 +16,10 @@ A secure, scalable Todo List API built with FastAPI, featuring JWT authenticatio
 
 1. Clone the repository
 2. Install dependencies: `pip install -r requirements.txt`
-3. Set up environment variables in `.env`
-4. Run: `uvicorn app.main:app --reload`
-5. Visit: http://localhost:8000/docs
+3. Set up PostgreSQL database
+4. Configure environment variables in `.env`
+5. Run: `uvicorn app.main:app --reload`
+6. Visit: http://localhost:8000/docs
 
 ## API Endpoints
 
@@ -40,23 +41,101 @@ A secure, scalable Todo List API built with FastAPI, featuring JWT authenticatio
 
 ## Environment Variables
 
+Create a `.env` file in the project root:
+
 ```env
-DATABASE_URL=sqlite:///./fastapi_todo.db
-JWT_SECRET_KEY=your-secret-key
+# Database Configuration (PostgreSQL)
+DATABASE_URL=postgresql://postgres:your_password@localhost:5432/fastapi_todo
+
+# JWT Configuration
+JWT_SECRET_KEY=your-super-secret-key-here
 ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=30
+
+# Application Configuration
 DEBUG=True
-ALLOWED_ORIGINS=http://localhost:3000
+ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
+```
+
+**Important:** Replace `your_password` with your actual PostgreSQL password.
+
+### Alternative: SQLite (for testing)
+If you prefer SQLite for easy setup:
+```env
+DATABASE_URL=sqlite:///./fastapi_todo.db
 ```
 
 ## Technology Stack
 
 - **FastAPI** - Modern Python web framework
 - **SQLAlchemy** - SQL toolkit and ORM
+- **PostgreSQL** - Primary database (SQLite also supported)
 - **Pydantic** - Data validation using Python type hints
 - **JWT** - JSON Web Tokens for authentication
 - **Bcrypt** - Password hashing
-- **PostgreSQL/SQLite** - Database options
+- **psycopg2** - PostgreSQL adapter for Python
+
+## Installation & Setup
+
+### Prerequisites
+- Python 3.8+
+- PostgreSQL 12+ (with psycopg2 driver included in requirements.txt)
+
+### Database Setup (PostgreSQL)
+
+1. **Install PostgreSQL**
+   - Download from: https://www.postgresql.org/download/
+   - Install and remember the password for `postgres` user
+
+2. **Create Database**
+   ```bash
+   # Connect to PostgreSQL
+   psql -U postgres
+   
+   # Create database
+   CREATE DATABASE fastapi_todo;
+   
+   # Exit
+   \q
+   ```
+
+3. **Update .env file**
+   ```env
+   DATABASE_URL=postgresql://postgres:your_password@localhost:5432/fastapi_todo
+   ```
+
+### Step-by-Step Setup
+
+1. **Clone the repository**
+   ```bash
+   git clone <your-repository-url>
+   cd todo_fastapi
+   ```
+
+2. **Create virtual environment**
+   ```bash
+   python -m venv venv
+   venv\Scripts\activate  # Windows
+   source venv/bin/activate  # Linux/Mac
+   ```
+
+3. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Set up environment variables**
+   Create `.env` file in project root (see Environment Variables section above)
+
+5. **Run the application**
+   ```bash
+   uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+   ```
+
+6. **Access the API**
+   - **Interactive Docs**: http://localhost:8000/docs
+   - **ReDoc**: http://localhost:8000/redoc
+   - **API Root**: http://localhost:8000/
 
 ## 🔁 Postman API Testing
 
@@ -64,7 +143,7 @@ A complete Postman collection is available for testing all API endpoints.
 
 ### 🧪 How to Use
 
-1. Import `FastAPI Todo API.postman_collection.json` into Postman
+1. Import `fastapi-todo.postman_collection.json` into Postman
 2. Select or create environment:
    - `base_url = http://127.0.0.1:8000`
 3. Run the following requests in order:
@@ -144,53 +223,6 @@ PUT /auth/me/password
 - [x] Auto-generated timestamps
 - [x] CORS configuration for frontend integration
 
-## Installation & Setup
-
-### Prerequisites
-- Python 3.8+
-- PostgreSQL (optional, SQLite included)
-
-### Step-by-Step Setup
-
-1. **Clone the repository**
-   ```bash
-   git clone <your-repository-url>
-   cd todo_fastapi
-   ```
-
-2. **Create virtual environment**
-   ```bash
-   python -m venv venv
-   venv\Scripts\activate  # Windows
-   source venv/bin/activate  # Linux/Mac
-   ```
-
-3. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Set up environment variables**
-   Create `.env` file in project root:
-   ```env
-   DATABASE_URL=sqlite:///./fastapi_todo.db
-   JWT_SECRET_KEY=your-super-secret-key-here
-   ALGORITHM=HS256
-   ACCESS_TOKEN_EXPIRE_MINUTES=30
-   DEBUG=True
-   ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
-   ```
-
-5. **Run the application**
-   ```bash
-   uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-   ```
-
-6. **Access the API**
-   - **Interactive Docs**: http://localhost:8000/docs
-   - **ReDoc**: http://localhost:8000/redoc
-   - **API Root**: http://localhost:8000/
-
 ## Project Structure
 
 ```
@@ -219,8 +251,26 @@ todo_fastapi/
 ├── requirements.txt            # Python dependencies
 ├── README.md                   # This file
 ├── fastapi-todo.postman_collection.json  # API testing collection
-└── fastapi_todo.db            # SQLite database (auto-created)
+└── (PostgreSQL database - external)
 ```
+
+## Troubleshooting
+
+### Database Connection Issues
+- **Error**: `connection to server failed`
+  - Solution: Ensure PostgreSQL is running
+  - Check: `pg_ctl status` or Services (Windows)
+
+- **Error**: `database "fastapi_todo" does not exist`
+  - Solution: Create database using `CREATE DATABASE fastapi_todo;`
+
+- **Error**: `authentication failed`
+  - Solution: Verify username/password in DATABASE_URL
+
+### Common Issues
+- **Port already in use**: Change port with `--port 8001`
+- **Module not found**: Activate virtual environment
+- **Permission denied**: Run as administrator (Windows)
 
 ## Development
 
