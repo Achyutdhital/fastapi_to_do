@@ -54,7 +54,7 @@ ACCESS_TOKEN_EXPIRE_MINUTES=30
 
 # Application Configuration
 DEBUG=True
-ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
+ALLOWED_ORIGINS=http://localhost:8000,http://127.0.0.1:8000
 ```
 
 **Important:** Replace `your_password` with your actual PostgreSQL password.
