@@ -64,7 +64,7 @@ A complete Postman collection is available for testing all API endpoints.
 
 ### 🧪 How to Use
 
-1. Import `fastapi-todo.postman_collection.json` into Postman
+1. Import `FastAPI Todo API.postman_collection.json` into Postman
 2. Select or create environment:
    - `base_url = http://127.0.0.1:8000`
 3. Run the following requests in order:
