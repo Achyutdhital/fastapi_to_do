@@ -125,7 +125,7 @@ def startup_event():
     print(f"📊 Debug mode: {settings.DEBUG}")
     print(f"🗄️ Database: Connected")
     print(f"🔒 CORS origins: {settings.origins_list}")
-    print(f"📚 API Documentation: http://localhost:3000/docs")
+    print(f"📚 API Documentation: http://localhost:8000/docs")
 
 # Shutdown event
 @app.on_event("shutdown")
